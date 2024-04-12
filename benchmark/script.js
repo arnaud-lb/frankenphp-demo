@@ -11,10 +11,14 @@ export default function () {
   'protocol is HTTP/2': (r) => r.proto === 'HTTP/2.0',
   });
 
-  const res2 = http.get('https://localhost/api');
+  const res2 = http.get('https://localhost/api', {
+    headers: {
+      Accept: 'text/html'
+    }
+  });
   check(res2, {
   'is status 200': (r) => r.status === 200,
-  'verify homepage text': (r) =>
+  'verify /api test': (r) =>
       String(r.body).includes('Hello API Platform'),
   'protocol is HTTP/2': (r) => r.proto === 'HTTP/2.0',
   });
@@ -22,15 +26,16 @@ export default function () {
   const res3 = http.get('https://localhost/api/monsters.jsonld');
   check(res3, {
   'is status 200': (r) => r.status === 200,
-  'verify homepage text': (r) =>
+  'verify /api/monsters.jsonld text': (r) =>
       String(r.body).includes('hydra:Collection'),
   'protocol is HTTP/2': (r) => r.proto === 'HTTP/2.0',
   });
 }
 
+/*
 export function handleSummary(data) {
   return {
     "summary.html": htmlReport(data),
   };
 }
-
+*/
